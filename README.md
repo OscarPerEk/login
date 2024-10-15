@@ -8,7 +8,7 @@ This repo creates a small app with the following tools and frameworks:
 - sqlite3: database
 - GORM: go library for interacting with database
 
-A lot of the code come from [Go Quickstart](https://auth0.com/docs/quickstart/webapp/golang) example app.
+A lot of the code come from [Auth0 Quickstart](https://auth0.com/docs/quickstart/webapp/golang) example app.
 On their website they provide a small go app that has a login/logout page.
 I used this app as the backbone and saved the user information to a sqlite3 database.
 I then created a new page which simply lists the content of the database.
