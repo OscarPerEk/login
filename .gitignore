@@ -1,3 +1,5 @@
+go.mod
+go.sum
 .env
 .DS_Store
 src/

@@ -1,13 +1,36 @@
 package callback
 
 import (
+	"01-Login/platform/authenticator"
+	"01-Login/web/app/types"
 	"net/http"
 
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
-
-	"01-Login/platform/authenticator"
+	"gorm.io/driver/sqlite"
+	"gorm.io/gorm"
 )
+
+type ProfileType map[string]interface{}
+
+func MarshalProfile(user *types.User, token ProfileType) *types.User {
+	if name, ok := token["name"].(string); ok {
+		user.Name = name
+	}
+	if name, ok := token["given_name"].(string); ok {
+		user.GivenName = name
+	}
+	if name, ok := token["family_name"].(string); ok {
+		user.FamilyName = name
+	}
+	if name, ok := token["nickname"].(string); ok {
+		user.Nickname = name
+	}
+	if name, ok := token["picture"].(string); ok {
+		user.Picture = name
+	}
+	return user
+}
 
 // Handler for our callback.
 func Handler(auth *authenticator.Authenticator) gin.HandlerFunc {
@@ -31,7 +54,7 @@ func Handler(auth *authenticator.Authenticator) gin.HandlerFunc {
 			return
 		}
 
-		var profile map[string]interface{}
+		var profile ProfileType
 		if err := idToken.Claims(&profile); err != nil {
 			ctx.String(http.StatusInternalServerError, err.Error())
 			return
@@ -43,6 +66,19 @@ func Handler(auth *authenticator.Authenticator) gin.HandlerFunc {
 			ctx.String(http.StatusInternalServerError, err.Error())
 			return
 		}
+
+		// Save user information to database
+		db, err := gorm.Open(sqlite.Open("app_db"), &gorm.Config{})
+		if err != nil {
+			panic("failed to connect database")
+		}
+
+		// Migrate the schema
+		db.AutoMigrate(&types.User{})
+
+		// Create
+		var user types.User
+		db.Create(MarshalProfile(&user, profile))
 
 		// Redirect to logged in page.
 		ctx.Redirect(http.StatusTemporaryRedirect, "/user")
