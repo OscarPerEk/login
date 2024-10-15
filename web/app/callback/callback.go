@@ -14,20 +14,23 @@ import (
 type ProfileType map[string]interface{}
 
 func MarshalProfile(user *types.User, token ProfileType) *types.User {
-	if name, ok := token["name"].(string); ok {
-		user.Name = name
+	if value, ok := token["name"].(string); ok {
+		user.Name = value
 	}
-	if name, ok := token["given_name"].(string); ok {
-		user.GivenName = name
+	if value, ok := token["given_name"].(string); ok {
+		user.GivenName = value
 	}
-	if name, ok := token["family_name"].(string); ok {
-		user.FamilyName = name
+	if value, ok := token["family_name"].(string); ok {
+		user.FamilyName = value
 	}
-	if name, ok := token["nickname"].(string); ok {
-		user.Nickname = name
+	if value, ok := token["nickname"].(string); ok {
+		user.Nickname = value
 	}
-	if name, ok := token["picture"].(string); ok {
-		user.Picture = name
+	if value, ok := token["picture"].(string); ok {
+		user.Picture = value
+	}
+	if value, ok := token["updated_at"].(string); ok {
+		user.UpdatedAt = value
 	}
 	return user
 }

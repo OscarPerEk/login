@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User List</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h2>Users</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Given Name</th>
+            <th>Family Name</th>
+            <th>Nickname</th>
+            <th>Picture</th>
+            <th>Last Updated</th>
+        </tr>
+        {{range .}}
+        <tr>
+            <td>{{.ID}}</td>
+            <td>{{.Name}}</td>
+            <td>{{.GivenName}}</td>
+            <td>{{.FamilyName}}</td>
+            <td>{{.Nickname}}</td>
+            <td><img src="{{.Picture}}" alt="User Picture" style="width:50px;height:50px;"></td>
+            <td>{{.UpdatedAt}}</td>
+        </tr>
+        {{end}}
+    </table>
+    <a id="qsUserBtn" class="btn" href="/user">Go to User</a>
+</body>
+</html>
