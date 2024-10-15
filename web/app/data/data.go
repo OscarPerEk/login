@@ -2,6 +2,7 @@ package data
 
 import (
 	"01-Login/web/app/types"
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -19,6 +20,7 @@ func Handler(ctx *gin.Context) {
 	if res.Error != nil {
 		panic("failed to get all items from database")
 	}
+	fmt.Printf("data handler users: %v/n", users)
 
-	ctx.HTML(http.StatusOK, "data.html", gin.H{"Users": users})
+	ctx.HTML(http.StatusOK, "data.html", users)
 }

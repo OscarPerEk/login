@@ -11,9 +11,7 @@ import (
 	"gorm.io/gorm"
 )
 
-type ProfileType map[string]interface{}
-
-func MarshalProfile(user *types.User, token ProfileType) *types.User {
+func MarshalProfile(user *types.User, token types.ProfileType) *types.User {
 	if value, ok := token["name"].(string); ok {
 		user.Name = value
 	}
@@ -57,7 +55,7 @@ func Handler(auth *authenticator.Authenticator) gin.HandlerFunc {
 			return
 		}
 
-		var profile ProfileType
+		var profile types.ProfileType
 		if err := idToken.Claims(&profile); err != nil {
 			ctx.String(http.StatusInternalServerError, err.Error())
 			return

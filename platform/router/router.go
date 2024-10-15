@@ -8,6 +8,7 @@ import (
 	"01-Login/web/app/home"
 	"01-Login/web/app/login"
 	"01-Login/web/app/logout"
+	"01-Login/web/app/types"
 	"01-Login/web/app/user"
 	"encoding/gob"
 
@@ -22,7 +23,7 @@ func New(auth *authenticator.Authenticator) *gin.Engine {
 
 	// To store custom types in our cookies,
 	// we must first register them using gob.Register
-	gob.Register(map[string]interface{}{})
+	gob.Register(types.ProfileType{})
 
 	store := cookie.NewStore([]byte("secret"))
 	router.Use(sessions.Sessions("auth-session", store))

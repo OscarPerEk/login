@@ -12,3 +12,5 @@ type User struct {
 	Picture    string
 	UpdatedAt  string
 }
+
+type ProfileType map[string]interface{}
